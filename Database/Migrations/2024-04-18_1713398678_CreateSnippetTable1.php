@@ -10,13 +10,23 @@ class CreateSnippetTable1 implements SchemaMigration
     {
         // マイグレーションロジックをここに追加してください
         return [
-            "CREATE TABLE snippet()"
+            "CREATE TABLE snippets(
+                id INT PRIMARY KEY AUTO_INCREMENT,
+                title VARCHAR(255),
+                url VARCHAR(255) NOT NULL,
+                language VARCHAR(255) NOT NULL,
+                content TEXT NOT NULL,
+                expire_at DATETIME NOT NULL,
+                created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+            )"
         ];
     }
 
     public function down(): array
     {
         // ロールバックロジックを追加してください
-        return [];
+        return [
+            "DROP TABLE snippets"
+        ];
     }
 }
