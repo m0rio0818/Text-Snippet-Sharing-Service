@@ -15,4 +15,34 @@ class ValidationHelper
         // 値がすべてのチェックをパスしたら、そのまま返します。
         return $value;
     }
+
+    public static function getSyntaxHighlight(): array
+    {
+        $syntaxValid = [
+            'html'       => 'HTML',
+            'css'        => 'CSS',
+            'javascript' => 'JavaScript',
+            'json'       => 'JSON',
+            'typescript' => 'TypeScript',
+            'python'     => 'Python',
+            'java'       => 'Java',
+            'c#'     => 'C#',
+            'c++'        => 'C++',
+            'php'        => 'PHP',
+            'ruby'       => 'Ruby',
+            'go'         => 'Go',
+            'markdown'   => 'Markdown',
+            'sql'        => 'SQL',
+            'xml'        => 'XML',
+            'yaml'       => "yaml"
+        ];
+        return $syntaxValid;
+    }
+
+
+    public static function getExpirationTime(): array
+    {
+        $timeValid = ["Never", "10 Min", "1 H", "1 Day", "1 Week", "1 Month", "1Year"];
+        return $timeValid;
+    }
 }
