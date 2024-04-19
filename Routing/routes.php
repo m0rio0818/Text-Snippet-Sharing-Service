@@ -7,8 +7,12 @@ use Response\Render\HTMLRenderer;
 use Response\Render\JSONRenderer;
 
 return [
-    'random/part' => function (): HTTPRenderer {
-
-        return new HTMLRenderer('component/random-part', ['part' => $part]);
+    '' => function (): HTTPRenderer {
+        $validTime = ValidationHelper::getExpirationTime();
+        $syntaxHighLight = ValidationHelper::getSyntaxHighlight();
+        return new HTMLRenderer('component/topPage', [
+            'validTime' => $validTime,
+            'syntaxHighLight' => $syntaxHighLight,
+        ]);
     }
 ];
