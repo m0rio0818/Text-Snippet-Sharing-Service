@@ -19,6 +19,7 @@ class ValidationHelper
     public static function getSyntaxHighlight(): array
     {
         $syntaxValid = [
+            'plaintext'       => 'plaintext',
             'html'       => 'HTML',
             'css'        => 'CSS',
             'javascript' => 'JavaScript',
@@ -26,7 +27,7 @@ class ValidationHelper
             'typescript' => 'TypeScript',
             'python'     => 'Python',
             'java'       => 'Java',
-            'c#'     => 'C#',
+            'c#'         => 'C#',
             'c++'        => 'C++',
             'php'        => 'PHP',
             'ruby'       => 'Ruby',
@@ -42,7 +43,15 @@ class ValidationHelper
 
     public static function getExpirationTime(): array
     {
-        $timeValid = ["Never", "10 Min", "1 H", "1 Day", "1 Week", "1 Month", "1Year"];
+        $timeValid = [
+            "Never" => "never",
+            "10 Min" => "10min",
+            "1 H" => "1h",
+            "1 Day" => "1d",
+            "1 Week" => "1w",
+            "1 Month" => "1m",
+            "1Year" => "1y"
+        ];
         return $timeValid;
     }
 }
