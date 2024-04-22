@@ -38,6 +38,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Monaco Editor Scripts -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.20.0/min/vs/loader.min.js"></script>
+<script src="/src/js/main.js"></script>
 <script>
     require.config({
         paths: {
@@ -67,7 +68,8 @@
                 data: value
             })
 
-            const requet = new Request("../../Helpers/createURL.php", {
+            const requestPath = "/Helpers/createURL.php";
+            const requet = new Request(requestPath, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
