@@ -44,13 +44,13 @@ class ValidationHelper
     public static function getExpirationTime(): array
     {
         $timeValid = [
-            "Never" => "never",
-            "10 Min" => "10min",
-            "1 H" => "1h",
-            "1 Day" => "1d",
-            "1 Week" => "1w",
-            "1 Month" => "1m",
-            "1Year" => "1y"
+            "Never" => null,
+            "10 Min" => "PT10M",
+            "1 Hour" => "PT1H",
+            "1 Day" => "PT1D",
+            "1 Week" => "P1W",
+            "1 Month" => "PT1M",
+            "1 Year" => "PT1Y"
         ];
         return $timeValid;
     }
