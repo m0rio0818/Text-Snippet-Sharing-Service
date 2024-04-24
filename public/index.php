@@ -15,8 +15,13 @@ $routes = include('Routing/routes.php');
 // リクエストURIを解析してパスだけを取得します。
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $path = ltrim($path, '/');
-$method = $_SERVER['REQUEST_METHOD'];
+$urlParts = explode("/",$path);
 
+if ($urlParts[0] == "snippet"){
+    $path = $urlParts[0];
+}
+
+$method = $_SERVER['REQUEST_METHOD'];
 
 // ルートにパスが存在するかチェックする
 if (isset($routes[$path])) {

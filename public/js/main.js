@@ -41,9 +41,6 @@ require(['vs/editor/editor.main'], function () {
         fetch(requet)
             .then(response => response.json())
             .then(data => {
-                // if (data === "success") {
-                //     console.log("DDD", data);
-                // }
                 console.log(data)
                 if (data["success"]) {
                     console.log("SUCESS");

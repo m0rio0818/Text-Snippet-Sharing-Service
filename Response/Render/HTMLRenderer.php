@@ -19,7 +19,6 @@ class HTMLRenderer implements HTTPRenderer
     {
         return [
             'Content-Type' => 'text/html; charset=UTF-8',
-            // 'Content-Type' => 'application/javascript; charset=UTF-8',
         ];
     }
 

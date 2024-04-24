@@ -56,15 +56,27 @@ class DatabaseHelper
         // $expired_at->add(new DateInterval($add_time));
         // $expiredAtFormatted = $expired_at->format('Y-m-d H:i:s');
 
-        $hashed_url = "http://localhost:8000/snippet/" . $hashedVal;
+        // $hashed_url = "http://localhost:8000/snippet/" . $hashedVal;
         // プリペアドステートメントを作成
         $stmt = $db->prepare("INSERT INTO snippets 
             (title, url, language, content, expire_at)
             VALUES (?, ?, ?, ?, ?)
             ");
-        $stmt->bind_param('sssss', $title, $hashed_url, $highlight, $content, $expiredAtFormatted);
+        $stmt->bind_param('sssss', $title, $hashedVal, $highlight, $content, $expiredAtFormatted);
         $insertSuccess  = $stmt->execute(); // ステートメントをクローズ
         $stmt->close();
         return $insertSuccess;
+    }
+
+    public static function getSnippeter(string $url): array
+    {
+        $db = new MySQLWrapper();
+        $stmt = $db->prepare("SELECT content, language FROM snippets WHERE url = ?");
+        $stmt->bind_param('s', $url);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        $data = $result->fetch_assoc();
+        return $data;
     }
 }

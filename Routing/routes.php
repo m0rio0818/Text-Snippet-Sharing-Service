@@ -32,15 +32,31 @@ return [
             $inserted = DatabaseHelper::createNewSnippetHelper($highlight, $title, $validTime, $content, $hashedValue);
 
             if ($inserted) {
-                return new JSONRenderer(["success" => true, "url" => "snippet/{$hashedValue}"]);
+                return new JSONRenderer(["success" => true, "url" => "snippet?={$hashedValue}"]);
             } else {
                 return new JSONRenderer(["success" => false]);
             }
         }
     },
-    "snippet" => function () {
-        $url = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
-        echo $url;
-        return new HTMLRenderer('component/snippet', []);
+    'snippet' => function (): HTMLRenderer {
+        $method = $_SERVER['REQUEST_METHOD'];
+
+        if ($method == "GET") {
+            $currentUrl = $_SERVER['REQUEST_URI'];
+            $urlParts = explode('/', $currentUrl);
+
+            $snippetPath = $urlParts[2];
+            // var_dump($urlParts);
+
+            // 必要に応じて、パスから不要な部分を削除する
+
+
+            $data = DatabaseHelper::getSnippeter($snippetPath);
+            $content = $data["content"];
+            $language  = $data["language"];
+
+
+            return new HTMLRenderer('component/snippet', ["content" => $content, "language" => $language]);
+        }
     }
 ];
