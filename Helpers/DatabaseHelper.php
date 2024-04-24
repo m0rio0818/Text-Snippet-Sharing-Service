@@ -71,12 +71,26 @@ class DatabaseHelper
     public static function getSnippeter(string $url): array
     {
         $db = new MySQLWrapper();
-        $stmt = $db->prepare("SELECT content, language FROM snippets WHERE url = ?");
+        $stmt = $db->prepare("SELECT * FROM snippets WHERE url = ?");
         $stmt->bind_param('s', $url);
         $stmt->execute();
         $result = $stmt->get_result();
-        
+
         $data = $result->fetch_assoc();
         return $data;
+    }
+
+    public static function getAllSnipetter(): array
+    {
+        $db = new MySQLWrapper();
+        $stmt = $db->prepare("SELECT * FROM snippets");
+        $stmt->execute();
+        $ans = [];
+        $result = $stmt->get_result();
+        while ($row = $result->fetch_assoc()) {
+            $ans[] = $row;
+        }
+        if (!$ans) throw new Exception('Could not find a single part in database');
+        return $ans;
     }
 }
