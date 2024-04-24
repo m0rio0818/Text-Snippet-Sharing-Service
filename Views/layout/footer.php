@@ -1,4 +1,4 @@
-</main> <!-- end of content -->
+</main>
 <!-- <script src="/public/js/editor.js"></script> -->
 </body>
 
