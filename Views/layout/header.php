@@ -7,7 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <title>Text Snipetter</title>
     <link rel="stylesheet" href="/css/style.css">
-
+    <script src="https://kit.fontawesome.com/599ca7f9b9.js" crossorigin="anonymous"></script>
 </head>
 <header class="fixed top-0 z-10 h-16 w-full bg-white text-white">
     <div class="d-flex font-medium justify-end text-center">
@@ -25,5 +25,6 @@
         </ul>
     </div>
 </header>
+
 <body>
-<div class="mt-16 d-flex justify-center">
+    <div class="mt-16 d-flex justify-center">

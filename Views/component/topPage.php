@@ -4,14 +4,17 @@
         <div id="editor-container" style="height:400px;"></div>
     </div>
     <div class="flex flex-col items-center border-gray-300 bg-gray-100 py-4 card sm:w-1/2 w-5/6 my-4 mx-auto px-5">
-        <h2 class="font-bold">Options</h2>
+        <div class="flex items-center">
+            <i class="fa-solid fa-gear fa-2x  mx-1"></i>
+            <h2 class="font-bold">Options</h2>
+        </div>
         <div class="w-full pl-10 py-2">
             <div class="relative inline-block">
                 <label for="syntax_highlight" class="pr-3">Syntax HighLight: </label>
                 <select id="syntax_highlight" name="syntax_highlight" class="appearance-none border border-gray-300 rounded py-2 pl-3 pr-10 leading-tight focus:outline-none focus:border-gray-500">
                     <?php foreach ($syntaxHighLight as $key => $value) {
                     ?>
-                        <option value=<?php echo $key; ?> class=""><?php echo $key; ?></option>;
+                        <option value=<?php echo $key; ?>><?php echo $key; ?></option>;
                     <?php } ?>
                 </select>
                 <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -25,9 +28,9 @@
             <div class="relative inline-block">
                 <label for="validTime" class="pr-3">Expireatoin Time: </label>
                 <select id="validTime" name="validTime" class="appearance-none border border-gray-300 rounded py-2 pl-3 pr-10 leading-tight focus:outline-none focus:border-gray-500">
-                    <?php foreach ($validTime as $time) {
+                    <?php foreach ($validTime as $key => $value) {
                     ?>
-                        <option value=<?php echo $time; ?> class=""><?php echo $time; ?></option>;
+                        <option value="<?php echo $value; ?>"><?php echo $key; ?></option>;
                     <?php } ?>
                 </select>
                 <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -55,10 +58,3 @@
 <!-- Monaco Editor Scripts -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.20.0/min/vs/loader.min.js"></script>
 <script src="/js/main.js"></script>
-<script>
-    let publish = document.getElementById("publish");
-    publish.addEventListener("click", ()=>{
-        console.log(publish.checked);
-    })
-</script>
-</script>
