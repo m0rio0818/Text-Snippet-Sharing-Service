@@ -41,16 +41,30 @@ class ValidationHelper
     }
 
 
+    public static function getExpiretionKeyValue(): array
+    {
+        $timeValid = [
+            "Never" => "never",
+            "10 Min" => "10min",
+            "1 Hour" => "1hour",
+            "1 Day" => "1day",
+            "1 Week" => "1week",
+            "1 Month" => "1month",
+            "1 Year" => "1year"
+        ];
+        return $timeValid;
+    }
+
     public static function getExpirationTime(): array
     {
         $timeValid = [
-            "Never" => null,
-            "10 Min" => "PT10M",
-            "1 Hour" => "PT1H",
-            "1 Day" => "PT1D",
-            "1 Week" => "P1W",
-            "1 Month" => "PT1M",
-            "1 Year" => "PT1Y"
+            "never" => null,
+            "10min" => "PT10M",
+            "1hour" => "PT1H",
+            "1day" => "PT1D",
+            "1week" => "P1W",
+            "1month" => "PT1M",
+            "1year" => "PT1Y"
         ];
         return $timeValid;
     }
