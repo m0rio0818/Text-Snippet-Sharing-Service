@@ -1,4 +1,3 @@
-
 // グレー消す => 緑を加えたい
 function addHighLight(target, a_target) {
     target.classList.remove("hover:border-gray-400");
@@ -26,16 +25,13 @@ function checkHeader() {
     const a_snippetList = document.getElementById("snippet_List").querySelector("a");;
 
     if (currentUrl.includes("snippet/")) {
-        console.log("url =>  snippet")
         removeHighlight(createSnippet, a_createSnippet);
         removeHighlight(snippetList, a_snippetList);
     } else if (currentUrl.includes("snippet_List")) {
-        console.log("url =>  snippet_list")
         removeHighlight(createSnippet, a_createSnippet);
         removeHighlight(snippetList, a_snippetList);
         addHighLight(snippetList, a_snippetList);
     } else {
-        console.log("url =>  /")
         removeHighlight(createSnippet, a_createSnippet);
         removeHighlight(snippetList, a_snippetList);
         addHighLight(createSnippet, a_createSnippet);
@@ -44,22 +40,4 @@ function checkHeader() {
 
 document.addEventListener("DOMContentLoaded", function () {
     checkHeader();
-    // const currentUrl = window.location.href;
-    // let createSnippet = document.getElementById("create_Snippet");
-    // let snippetList = document.getElementById("snippet_List");
-
-    // console.log(createSnippet);
-    // console.log(snippetList);
-    // console.log(currentUrl);
-
-    // if (currentUrl.includes("snippet/")) {
-    //     console.log("url =>  snippet")
-    //     removeHighlight(createSnippet);
-    //     removeHighlight(snippetList);
-    // } else if (currentUrl.includes("snippet_List")) {
-    //     console.log("url =>  snippet_list")
-    // } else {
-    //     console.log("url =>  /")
-    // }
-
 });
