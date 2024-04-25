@@ -15,7 +15,10 @@ require(['vs/editor/editor.main'], function () {
         let syntax_highlight = document.getElementById("syntax_highlight");
         let validTime = document.getElementById("validTime");
         let title = document.getElementById("title");
-        let editorEle = document.getElementById("editor-container");
+        let publishCheck = document.getElementById("publish");
+
+        console.log(publishCheck.checked);
+
         title = !title.value ? "undefined" : title.value;
         let value = editor.getValue();
 
@@ -23,7 +26,8 @@ require(['vs/editor/editor.main'], function () {
             syntax_highlight: syntax_highlight.value,
             title: title,
             validTime: validTime.value,
-            content: value
+            content: value,
+            publish: publishCheck.checked
         }
 
         const jsonBody = JSON.stringify(data)
@@ -51,7 +55,6 @@ require(['vs/editor/editor.main'], function () {
 
 
     let syntax_highlight = document.getElementById("syntax_highlight");
-    console.log(syntax_highlight);
     syntax_highlight.addEventListener("change", () => {
         let value = syntax_highlight.value;
         let model = editor.getModel();
@@ -59,9 +62,4 @@ require(['vs/editor/editor.main'], function () {
         monaco.editor.setModelLanguage(model, value);
         console.log(value);
     })
-
-    editor.onDidChangeModelContent(() => {
-        // let value = editor.getValue();
-        // console.log(value);
-    });
 })

@@ -1,5 +1,4 @@
-</main>
-<!-- <script src="/public/js/editor.js"></script> -->
+</div>
 </body>
-
+<script src="/js/header.js"></script>
 </html>
