@@ -9,7 +9,7 @@ use Exception;
 
 class DatabaseHelper
 {
-    public static function createNewSnippetHelper(string $highlight, string $title, string $validTime, string $content, string $hashedVal)
+    public static function createNewSnippetHelper(string $highlight, string $title, string $validTime, string $content, string $hashedVal, bool $publish)
     {
         $db = new MySQLWrapper();
 
@@ -56,41 +56,49 @@ class DatabaseHelper
         // $expired_at->add(new DateInterval($add_time));
         // $expiredAtFormatted = $expired_at->format('Y-m-d H:i:s');
 
-        // $hashed_url = "http://localhost:8000/snippet/" . $hashedVal;
         // プリペアドステートメントを作成
         $stmt = $db->prepare("INSERT INTO snippets 
-            (title, url, language, content, expire_at)
-            VALUES (?, ?, ?, ?, ?)
+            (title, url, language, content, expiration, publish,  expire_at)
+            VALUES (?, ?, ?, ?, ?, ?, ? )
             ");
-        $stmt->bind_param('sssss', $title, $hashedVal, $highlight, $content, $expiredAtFormatted);
+        $stmt->bind_param('sssssis', $title, $hashedVal, $highlight, $content, $validTime, $publish, $expiredAtFormatted);
         $insertSuccess  = $stmt->execute(); // ステートメントをクローズ
         $stmt->close();
         return $insertSuccess;
     }
 
-    public static function getSnippeter(string $url): array
+    public static function getSnippeter(string $url): array | string
     {
         $db = new MySQLWrapper();
         $stmt = $db->prepare("SELECT * FROM snippets WHERE url = ?");
         $stmt->bind_param('s', $url);
         $stmt->execute();
         $result = $stmt->get_result();
-
-        $data = $result->fetch_assoc();
-        return $data;
+        // 結果が空であるかどうかを確認
+        if ($result->num_rows === 0) {
+            // 一致するデータが見つからない場合の処理
+            return "nodata"; // または他の適切な値を返す
+        } else {
+            // 一致するデータが見つかった場合の処理
+            $data = $result->fetch_assoc();
+            return $data;
+        }
     }
 
-    public static function getAllSnipetter(): array
+    public static function getAllSnipetter(): array | string
     {
         $db = new MySQLWrapper();
-        $stmt = $db->prepare("SELECT * FROM snippets");
+        $stmt = $db->prepare("SELECT * FROM snippets WHERE publish = 1");
         $stmt->execute();
         $ans = [];
         $result = $stmt->get_result();
         while ($row = $result->fetch_assoc()) {
             $ans[] = $row;
         }
-        if (!$ans) throw new Exception('Could not find a single part in database');
+        
+        if (!$ans) {
+            return "nodata";
+        }
         return $ans;
     }
 }

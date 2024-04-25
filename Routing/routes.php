@@ -27,12 +27,13 @@ return [
             $title = $data["title"];
             $validTime = $data["validTime"];
             $content = $data["content"];
+            $publish = $data["publish"];
             $hashedValue = hash('sha256', uniqid(mt_rand(), true));
 
-            $inserted = DatabaseHelper::createNewSnippetHelper($highlight, $title, $validTime, $content, $hashedValue);
+            $inserted = DatabaseHelper::createNewSnippetHelper($highlight, $title, $validTime, $content, $hashedValue, $publish);
 
             if ($inserted) {
-                return new JSONRenderer(["success" => true, "url" => "snippet?={$hashedValue}"]);
+                return new JSONRenderer(["success" => true, "url" => "snippet/{$hashedValue}"]);
             } else {
                 return new JSONRenderer(["success" => false]);
             }
@@ -44,19 +45,23 @@ return [
         if ($method == "GET") {
             $currentUrl = $_SERVER['REQUEST_URI'];
             $urlParts = explode('/', $currentUrl);
-
+            if (count($urlParts) < 3) {
+                return new HTMLRenderer('component/404', ["data" => "url does not correct. need hashstring.\n/snippet/{hashstring}"]);
+            }
             $snippetPath = $urlParts[2];
-            // var_dump($urlParts);
-
-            // 必要に応じて、パスから不要な部分を削除する
-
-
             $data = DatabaseHelper::getSnippeter($snippetPath);
-            $content = $data["content"];
-            $language  = $data["language"];
-
-
-            return new HTMLRenderer('component/snippet', ["content" => $content, "language" => $language]);
+            if ($data == "nodata") {
+                // ハッシュが一致しない場合のurl
+                return new HTMLRenderer('component/404', ["data" => "url '/snippet/$snippetPath' does not exist"]);
+            }
+            return new HTMLRenderer('component/snippet', ["data" => $data]);
         }
+    },
+    'snippet_List' => function (): HTMLRenderer {
+        $snippets = DatabaseHelper::getAllSnipetter();
+        if ($snippets == "nodata") {
+            return new HTMLRenderer('component/404', ["data" => "there is no public data at current Database. create new public snippet"]);
+        }
+        return new HTMLRenderer('component/snippet_Lists', ["snippets" => $snippets]);
     }
 ];

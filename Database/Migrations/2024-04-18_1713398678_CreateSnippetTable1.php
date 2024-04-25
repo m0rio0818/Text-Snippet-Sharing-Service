@@ -16,6 +16,8 @@ class CreateSnippetTable1 implements SchemaMigration
                 url VARCHAR(255) NOT NULL,
                 language VARCHAR(255) NOT NULL,
                 content TEXT NOT NULL,
+                expiration TEXT NOT NULL,
+                publish BOOLEAN NOT NULL,
                 expire_at DATETIME NOT NULL,
                 created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
             )"
