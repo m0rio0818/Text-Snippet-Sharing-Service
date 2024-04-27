@@ -29,9 +29,20 @@ class DatabaseHelper
             VALUES (?, ?, ?, ?, ?, ?, ? )
             ");
         $stmt->bind_param('sssssis', $title, $hashedVal, $highlight, $content, $validTime, $publish, $expiredAtFormatted);
-        $insertSuccess  = $stmt->execute();
+        $insertSuccess = $stmt->execute();
         $stmt->close();
         return $insertSuccess;
+    }
+
+    public static function deleteExpiredAt(string $url): string
+    {
+        $db = new MySQLWrapper();
+        $stmt = $db->prepare("DELETE FROM snippets WHERE url = ?");
+        $stmt->bind_param('s', $url);
+        $stmt->execute();
+        $result = $stmt->execute();
+        if ($result) return "success";
+        return "failed"; 
     }
 
     public static function getSnippeter(string $url): array | string
@@ -41,12 +52,9 @@ class DatabaseHelper
         $stmt->bind_param('s', $url);
         $stmt->execute();
         $result = $stmt->get_result();
-        // 結果が空であるかどうかを確認
         if ($result->num_rows === 0) {
-            // 一致するデータが見つからない場合の処理
-            return "nodata"; // または他の適切な値を返す
+            return "nodata";
         } else {
-            // 一致するデータが見つかった場合の処理
             $data = $result->fetch_assoc();
             return $data;
         }
@@ -55,7 +63,7 @@ class DatabaseHelper
     public static function getAllSnipetter(): array | string
     {
         $db = new MySQLWrapper();
-        $stmt = $db->prepare("SELECT * FROM snippets WHERE publish = 1");
+        $stmt = $db->prepare("SELECT * FROM snippets WHERE publish = 1 AND (expire_at > NOW() OR expire_at IS NULL)");
         $stmt->execute();
         $ans = [];
         $result = $stmt->get_result();
