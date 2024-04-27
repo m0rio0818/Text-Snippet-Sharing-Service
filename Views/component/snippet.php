@@ -37,7 +37,7 @@ $exipration_key = array_search($exipration, $timeLists);
             </div>
             <div class="flex items-center py-1">
                 <i class="px-2  fa-solid fa-calendar-week"></i>
-                <p>Expire At : <?php echo $expire_at ?></p>
+                <p>Expire At : <?php echo is_null($expire_at) ? "Not disappear" : $expire_at ?></p>
             </div>
         </div>
         <div class="flex justify-center items-center mb-3 w-full">

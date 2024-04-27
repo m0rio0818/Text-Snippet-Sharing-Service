@@ -5,7 +5,7 @@
     </div>
     <div class="flex flex-col items-center border-gray-300 bg-gray-100 py-4 card sm:w-1/2 w-5/6 my-4 mx-auto px-5">
         <div class="flex items-center">
-            <i class="fa-solid fa-gear fa-2x  mx-1"></i>
+            <i class="fa-solid fa-gear fa-2xn  mx-1"></i>
             <h2 class="font-bold">Options</h2>
         </div>
         <div class="w-full pl-10 py-2">
@@ -48,7 +48,7 @@
         </div>
         <div class="flex items-center w-full py-2 pl-10">
             <input id="publish" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-            <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Add Publish Snippet List</label>
+            <label for="publish" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Add Publish Snippet List</label>
         </div>
         <div class="w-full py-2 flex justify-center">
             <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full" id="create_snippet">Create Snippets</button>
