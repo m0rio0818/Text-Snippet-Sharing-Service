@@ -10,7 +10,7 @@ return [
     '' => function (): HTMLRenderer  | JSONRenderer {
         $method = $_SERVER['REQUEST_METHOD'];
         if ($method == "GET") {
-            $validTime = array_keys(ValidationHelper::getExpirationTime());
+            $validTime = ValidationHelper::getExpiretionKeyValue();
             $syntaxHighLight = ValidationHelper::getSyntaxHighlight();
             return new HTMLRenderer('component/topPage', [
                 'validTime' => $validTime,
@@ -30,6 +30,13 @@ return [
             $publish = $data["publish"];
             $hashedValue = hash('sha256', uniqid(mt_rand(), true));
 
+            $result = ValidationHelper::checkIsValidText($content);
+            
+            if (!$result["status"]) {
+                return new JSONRenderer(["success" => false, "message" => $result["message"]]);
+            }
+
+
             $inserted = DatabaseHelper::createNewSnippetHelper($highlight, $title, $validTime, $content, $hashedValue, $publish);
 
             if ($inserted) {
@@ -41,7 +48,6 @@ return [
     },
     'snippet' => function (): HTMLRenderer {
         $method = $_SERVER['REQUEST_METHOD'];
-
         if ($method == "GET") {
             $currentUrl = $_SERVER['REQUEST_URI'];
             $urlParts = explode('/', $currentUrl);
@@ -50,6 +56,19 @@ return [
             }
             $snippetPath = $urlParts[2];
             $data = DatabaseHelper::getSnippeter($snippetPath);
+            $expire_at = $data["expire_at"];
+            $url = $data["url"];
+
+            if (!is_null($expire_at)) {
+                $expire_time = strtotime($expire_at);
+                $currentTime = time();
+                if ($expire_time < $currentTime) {
+                    // DBからurlを削除する。
+                    $result = DatabaseHelper::deleteExpiredAt($url);
+                    return new HTMLRenderer('component/expire_snippet', ["data" => "deleted data FROM DB"]);
+                }
+            }
+
             if ($data == "nodata") {
                 // ハッシュが一致しない場合のurl
                 return new HTMLRenderer('component/404', ["data" => "url '/snippet/$snippetPath' does not exist"]);

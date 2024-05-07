@@ -47,8 +47,9 @@ require(['vs/editor/editor.main'], function () {
             .then(data => {
                 console.log(data)
                 if (data["success"]) {
-                    console.log("SUCESS");
                     window.location.href = data["url"]
+                } else {
+                    window.alert(data["message"]);
                 }
             })
     })
