@@ -14,8 +14,11 @@ class DatabaseHelper
     {
         $db = new MySQLWrapper();
 
+        $createdAt = new DateTime('now', new DateTimeZone('Asia/Tokyo'));
         $expiredAt = new DateTime('now', new DateTimeZone('Asia/Tokyo'));
         $valiable_Time = ValidationHelper::getExpirationTime();
+
+        $createdAt = $createdAt->format('Y-m-d H:i:s');
 
         if ($validTime !== "never") {
             $expiredAt->add(new DateInterval($valiable_Time[$validTime]));
@@ -25,10 +28,10 @@ class DatabaseHelper
         }
 
         $stmt = $db->prepare("INSERT INTO snippets 
-            (title, url, language, content, expiration, publish,  expire_at)
-            VALUES (?, ?, ?, ?, ?, ?, ? )
+            (title, url, language, content, expiration, publish, expire_at, created_at)
+            VALUES (?, ?, ?, ?, ?, ?, ?,  ?)
             ");
-        $stmt->bind_param('sssssis', $title, $hashedVal, $highlight, $content, $validTime, $publish, $expiredAtFormatted);
+        $stmt->bind_param('sssssiss', $title, $hashedVal, $highlight, $content, $validTime, $publish, $expiredAtFormatted, $createdAt);
         $insertSuccess = $stmt->execute();
         $stmt->close();
         return $insertSuccess;
